@@ -1203,11 +1203,17 @@ SpotifyWebApi.prototype = {
    *          otherwise an error. Not returned if a callback is given.
    */
   setRepeat: function(options, callback) {
+    var params = {
+      /* jshint camelcase: false */
+      state: options.state || 'off'
+    };
+    if (options && 'device_id' in options) {
+      /* jshint camelcase: false */
+      params.device_id = options.device_id;
+    }
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/repeat')
-      .withQueryParameters({
-        state: options.state || 'off'
-      })
+      .withQueryParameters(params)
       .build()
       .execute(HttpManager.put, callback);
   },
@@ -1221,11 +1227,17 @@ SpotifyWebApi.prototype = {
    *          otherwise an error. Not returned if a callback is given.
    */
   setShuffle: function(options, callback) {
+    var params = {
+      /* jshint camelcase: false */
+      state: options.state || 'false'
+    };
+    if (options && 'device_id' in options) {
+      /* jshint camelcase: false */
+      params.device_id = options.device_id;
+    }
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/shuffle')
-      .withQueryParameters({
-        state: options.state || 'false'
-      })
+      .withQueryParameters(params)
       .build()
       .execute(HttpManager.put, callback);
   },
